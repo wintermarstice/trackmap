@@ -30,7 +30,21 @@ The mapping is a CSV file, containing a row for each track, and column for each 
 - **YouTube**: `youtube.com/watch?v={identifier}` where identifier is a 11-character alphanumeric string.
 - **Apple Music**: `music.apple.com/**/song/*/{identifier}` where identifier is an unsigned integer of at least 32 bits.
 
+The `*` captures single path segment, and `**` captures all the path segments until the first instance of the next one then stops (excluding it). 
+
+Example:
+```
+https://music.apple.com/us/song/meol/288667610
+                        ^^      ^^^^ ^^^^^^^^^
+                        **      *    identifier
+```
+
 The columns are: `id`, `applemusic`, `youtube`, and `spotify`. Increment the ID from the last row, and put platform identifiers to their corresponding columns.
+
+The values are converted back to links using this formulae:
+- **Spotify**: `{identifier}` -> `https://open.spotify.com/track/{identifier}` (will redirect to the region of your country)
+- **YouTube**: `{identifier}` -> `https://youtube.com/watch?v={identifier}` (will just open the video page)
+- **Apple Music**: `{identifier}` -> `https://music.apple.com/song/{identifier}` (will redirect to the region of your country)
 
 # License
 This work © 2024 is licensed under CC BY-NC-SA 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/4.0/
